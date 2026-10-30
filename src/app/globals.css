@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #096633;
+  --color-primary-hover: #075229;
+  --color-primary-light: #eaf8ee;
+  --color-surface: #fbfbfb;
+  --color-surface-card: #ffffff;
+  --color-surface-border: #eaedf1;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  direction: ltr;
+  scroll-behavior: smooth;
+  font-family: "Cairo", system-ui, -apple-system, sans-serif;
+  background-color: #fbfbfb;
+  color: #111827;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #fbfbfb;
+  font-family: "Cairo", system-ui, -apple-system, sans-serif;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* iOS Safe Areas */
+.pb-safe {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));
+}
+
+.pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0.75rem));
+}

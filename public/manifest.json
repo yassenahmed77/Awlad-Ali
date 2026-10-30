@@ -1,0 +1,19 @@
+{
+  "name": "أولاد علي - وجبات وفراخ مشوية",
+  "short_name": "أولاد علي",
+  "description": "أطلب أشهى البيتزا والفطائر والكريب والشاورما والبروستد أونلاين من أولاد علي شبرا مصر",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfbfb",
+  "theme_color": "#096633",
+  "dir": "rtl",
+  "lang": "ar-EG",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
+

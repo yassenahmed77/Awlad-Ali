@@ -14,53 +14,60 @@ export function ProductCardHorizontal({ product, onSelect }) {
   return (
     <div
       onClick={() => onSelect(product)}
-      className="flex items-center justify-between p-3.5 bg-white rounded-[20px] border border-[#eaedf1] shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:border-[#096633] transition-all cursor-pointer active:scale-[0.99] gap-3.5"
+      className="flex items-center justify-between p-3 bg-white rounded-2xl border border-[#eaedf1] shadow-sm hover:shadow-md transition-all cursor-pointer active:scale-[0.99] gap-3"
     >
-      {/* Product Image on Left (Natural LTR) */}
-      <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 bg-slate-50 border border-slate-100">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="120px"
-          className="object-cover"
-        />
+      {/* 1. Left Side Column: Badge at Top, Rounded Square Plus Button at Bottom (Exact Image 3 Match) */}
+      <div className="flex flex-col justify-between self-stretch shrink-0 items-start">
+        {/* Top Left Badge (Small & Compact) */}
+        <span className="inline-block px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-[#eaf8ee] text-[#0b6638] leading-tight">
+          {product.categoryName}
+        </span>
+
+        {/* Bottom Left: Rounded-XL Green Plus Button (Exact Image 3 Match: Rounded Square) */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(product);
+          }}
+          className="w-8 h-8 rounded-xl bg-[#0b6638] text-white flex items-center justify-center hover:bg-[#08502c] active:scale-75 active:bg-[#08502c] transition-all duration-100 shadow-sm cursor-pointer mt-auto"
+          aria-label={`إضافة ${product.name}`}
+        >
+          <Plus className="w-4 h-4 stroke-[2.5]" />
+        </button>
       </div>
 
-      {/* Details on Right (Natural LTR) */}
-      <div className="flex-1 flex flex-col justify-between self-stretch min-w-0">
-        <div className="space-y-1">
-          <span className="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-[#eaf8ee] text-[#096633]">
-            {product.categoryName}
-          </span>
-          <h4 className="text-sm sm:text-base font-black text-[#111827] line-clamp-1">
+      {/* 2. Middle Column: Title & Description & Price at Bottom */}
+      <div className="flex-1 flex flex-col justify-between self-stretch text-right min-w-0 py-0.5">
+        <div>
+          <h4 className="text-[15px] sm:text-base font-black text-[#0f172a] leading-snug tracking-tight">
             {product.name}
           </h4>
-          <p className="text-[11px] sm:text-xs text-[#64748b] line-clamp-2 leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-[#6b7280] leading-relaxed mt-0.5 font-normal line-clamp-2">
             {product.description}
           </p>
         </div>
 
-        {/* Price and Plus Button Row */}
-        <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-50">
-          <div className="flex items-baseline gap-1">
-            <span className="text-[11px] text-[#9ca3af] font-medium">يبدأ من:</span>
-            <span className="text-sm font-black text-[#096633]">
-              {formatCurrency(minPrice)}
-            </span>
-          </div>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect(product);
-            }}
-            className="w-8 h-8 rounded-lg bg-[#096633] text-white flex items-center justify-center hover:bg-[#075229] active:scale-90 transition-all shadow-sm"
-            aria-label={`إضافة ${product.name}`}
-          >
-            <Plus className="w-4 h-4 stroke-[2.5]" />
-          </button>
+        {/* Price at Bottom: Matching Image 3 (Grey "يبدأ من:", Bold Green Price, Grey "ج.م") */}
+        <div className="flex items-baseline justify-start gap-1 mt-2 text-right" dir="rtl">
+          <span className="text-xs text-[#64748b] font-medium">يبدأ من:</span>
+          <span className="text-base sm:text-lg font-black text-[#0b6638]">
+            {minPrice}
+          </span>
+          <span className="text-xs font-semibold text-[#64748b]">
+            ج.م
+          </span>
         </div>
+      </div>
+
+      {/* 3. Far Right: Food Image with Rounded Corners */}
+      <div className="relative w-24 h-24 rounded-2xl overflow-hidden shrink-0 bg-slate-50 border border-slate-100 shadow-sm">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="96px"
+          className="object-cover"
+        />
       </div>
     </div>
   );

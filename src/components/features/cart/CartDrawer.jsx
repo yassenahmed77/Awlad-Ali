@@ -59,7 +59,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
         <div className="flex-1 overflow-y-auto px-5 py-3 space-y-4">
           {items.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center text-center space-y-3">
-              <div className="w-16 h-16 rounded-full bg-[#eaf8ee] text-[#096633] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#eaf8ee] text-[#0b6638] flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8" />
               </div>
               <h4 className="text-base font-black text-[#111827]">سلتك لسه فاضية!</h4>
@@ -68,7 +68,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
               </p>
               <button
                 onClick={onClose}
-                className="mt-2 px-5 py-2.5 rounded-full bg-[#096633] text-white text-xs font-bold hover:bg-[#075229] transition-all"
+                className="mt-2 px-5 py-2.5 rounded-full bg-[#0b6638] text-white text-xs font-bold hover:bg-[#08502c] transition-all"
               >
                 تصفح المنيو
               </button>
@@ -83,7 +83,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="text-[11px] text-[#9ca3af] block">الفرع المسئول</span>
-                  <p className="font-black text-[#096633]">روض الفرج، شبرا</p>
+                  <p className="font-black text-[#0b6638]">روض الفرج، شبرا</p>
                 </div>
               </div>
 
@@ -98,7 +98,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
                     <div className="flex items-center gap-2 bg-[#f8fafc] border border-[#eaedf1] px-2.5 py-1 rounded-full shrink-0">
                       <button
                         onClick={() => updateQuantity(item.cartKey, item.quantity + 1)}
-                        className="w-5 h-5 flex items-center justify-center rounded-full bg-[#096633] text-white active:scale-95"
+                        className="w-5 h-5 flex items-center justify-center rounded-full bg-[#0b6638] text-white active:scale-95"
                       >
                         <Plus className="w-3 h-3 stroke-[2.5]" />
                       </button>
@@ -120,11 +120,11 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
                       </h5>
                       <div className="flex flex-wrap items-center gap-1 mt-0.5">
                         {item.selectedSize && (
-                          <span className="text-[10px] font-bold text-[#096633] bg-[#eaf8ee] px-2 py-0.5 rounded-md">
+                          <span className="text-[10px] font-bold text-[#0b6638] bg-[#eaf8ee] px-2 py-0.5 rounded-md">
                             {item.selectedSize.name}
                           </span>
                         )}
-                        <span className="text-xs font-black text-[#096633]">
+                        <span className="text-xs font-black text-[#0b6638]">
                           {formatCurrency(item.itemTotal)}
                         </span>
                       </div>
@@ -157,7 +157,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
                 onClose();
                 onProceedToCheckout();
               }}
-              className="flex items-center gap-2 bg-[#096633] text-white font-black text-xs px-5 py-3 rounded-xl hover:bg-[#075229] active:scale-95 transition-all shadow-sm"
+              className="flex items-center gap-2 bg-[#0b6638] text-white font-black text-xs px-5 py-3 rounded-xl hover:bg-[#08502c] active:scale-95 transition-all shadow-sm"
             >
               <span>متابعة الطلب</span>
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -166,7 +166,7 @@ export function CartDrawer({ isOpen, onClose, onProceedToCheckout }) {
             {/* Total Price on Right */}
             <div className="text-right">
               <span className="text-[10px] text-[#9ca3af] block font-medium">المجموع المطلوب</span>
-              <span className="text-base font-black text-[#096633]">
+              <span className="text-base font-black text-[#0b6638]">
                 {formatCurrency(subtotal)}
               </span>
             </div>

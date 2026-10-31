@@ -7,20 +7,20 @@
 export const storeConfig = {
   name: "أولاد علي",
   nameEn: "Awlad Ali",
-  tagline: "طعم الأصالة والجودة العالية",
-  phone: "01000000000",
-  whatsapp: "201000000000",
-  address: "شارع الجمهورية - وسط البلد",
+  tagline: "فطائر وبيتزا أولاد علي",
+  phone: "01094467175",
+  whatsapp: "201094467175",
+  address: "2 شارع روض الفرج، شبرا مصر",
   currency: "ج.م",
   currencyEn: "EGP",
   estimatedPrepTime: "15 - 25 دقيقة",
   minOrderValue: 50,
   deliveryFee: 15,
   isStoreOpen: true,
-  openingHours: "10:00 ص - 02:00 ص",
+  openingHours: "10:00 ص - 03:00 ص",
   geo: {
-    latitude: 30.0444,
-    longitude: 31.2357,
+    latitude: 30.0768,
+    longitude: 31.2458,
   },
 };
 

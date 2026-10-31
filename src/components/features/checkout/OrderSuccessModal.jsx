@@ -47,13 +47,13 @@ export function OrderSuccessModal({ order, isOpen, onClose }) {
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 text-center">
           {/* Animated Success Circle */}
-          <div className="w-16 h-16 rounded-full bg-[#eaf8ee] text-[#096633] mx-auto flex items-center justify-center animate-bounce">
+          <div className="w-16 h-16 rounded-full bg-[#eaf8ee] text-[#0b6638] mx-auto flex items-center justify-center animate-bounce">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
           <div className="space-y-1">
             <span className="text-xs font-bold text-[#9ca3af]">رقم الطلب الخاص بك:</span>
-            <h3 className="text-2xl font-black text-[#096633] tracking-widest">
+            <h3 className="text-2xl font-black text-[#0b6638] tracking-widest">
               #{order.id}
             </h3>
             <p className="text-xs text-[#64748b]">
@@ -65,7 +65,7 @@ export function OrderSuccessModal({ order, isOpen, onClose }) {
           <div className="grid grid-cols-3 gap-2 p-3 bg-white rounded-2xl border border-[#eaedf1] text-center text-xs">
             <div className="space-y-0.5 border-l border-[#eaedf1]">
               <span className="text-[11px] text-[#9ca3af] block">النوع</span>
-              <p className="font-black text-[#096633]">
+              <p className="font-black text-[#0b6638]">
                 {order.orderType === "delivery" ? "دليفري" : "استلام"}
               </p>
             </div>
@@ -75,7 +75,15 @@ export function OrderSuccessModal({ order, isOpen, onClose }) {
             </div>
             <div className="space-y-0.5">
               <span className="text-[11px] text-[#9ca3af] block">الحالة</span>
-              <p className="font-black text-amber-600">جاري التجهيز</p>
+              <p className="font-black text-amber-600">
+                {{
+                  pending: "تم الاستلام 🟡",
+                  preparing: "جاري التجهيز ⏳",
+                  ready: "جاهز للتسليم 📦",
+                  completed: "تم التسليم ✅",
+                  cancelled: "ملغي ❌",
+                }[order.status || "pending"]}
+              </p>
             </div>
           </div>
 
@@ -105,7 +113,7 @@ export function OrderSuccessModal({ order, isOpen, onClose }) {
         <div className="flex items-center justify-between px-5 py-3.5 border-t border-[#eaedf1] bg-white pb-safe">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 bg-[#096633] text-white font-black text-xs px-5 py-3 rounded-xl hover:bg-[#075229] active:scale-95 transition-all shadow-sm"
+            className="flex items-center gap-2 bg-[#0b6638] text-white font-black text-xs px-5 py-3 rounded-xl hover:bg-[#08502c] active:scale-95 transition-all shadow-sm"
           >
             <span>العودة للمنيو</span>
             <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -113,7 +121,7 @@ export function OrderSuccessModal({ order, isOpen, onClose }) {
 
           <div className="text-right">
             <span className="text-[10px] text-[#9ca3af] block font-medium">المبلغ المطلوب</span>
-            <span className="text-base font-black text-[#096633]">
+            <span className="text-base font-black text-[#0b6638]">
               {formatCurrency(order.totalAmount)}
             </span>
           </div>

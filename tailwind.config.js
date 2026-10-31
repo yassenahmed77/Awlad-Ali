@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Cairo", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["Cairo", "Tahoma", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        cairo: ["Cairo", "sans-serif"],
       },
       colors: {
         brand: {

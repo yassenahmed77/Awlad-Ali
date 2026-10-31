@@ -15,10 +15,10 @@ export function HeroBanner({ onOrderNowClick }) {
         {/* Right Text (Flush Right, Bold & Starts From Right) */}
         <div className="text-right space-y-0.5" dir="rtl">
           <h2 className="text-base sm:text-lg font-black text-white leading-tight">
-            أجدع أكل في شبرا 🔥
+            أصل الفطير والبيتزا في مصر 🔥
           </h2>
-          <p className="text-[11px] sm:text-xs text-[#a7f3d0] font-medium leading-tight">
-            توصيل ساخن وسريع لجميع مناطق شبرا
+          <p className="text-[11px] sm:text-xs text-[#a7f3d0] font-bold leading-tight">
+            أسرع دليفري في شبرا
           </p>
         </div>
       </div>

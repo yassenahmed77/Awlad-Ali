@@ -1,1 +1,1 @@
-export { CartProvider, useCart } from "@/context/CartContext";
+export * from "./useCart.jsx";

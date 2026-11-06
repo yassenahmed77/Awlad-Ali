@@ -5,7 +5,7 @@ import Image from "next/image";
 import { X, Heart, Plus, Minus, ArrowLeft } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
-export function ProductDetailModal({ product, isOpen, onClose, onAddToCart }) {
+export function ProductDetailModal({ product, isOpen, onClose, onAddToCart, editingItem = null }) {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [quantity, setQuantity] = useState(1);
@@ -13,15 +13,39 @@ export function ProductDetailModal({ product, isOpen, onClose, onAddToCart }) {
 
   useEffect(() => {
     if (product) {
-      if (product.sizes && product.sizes.length > 0) {
-        setSelectedSize(product.sizes[0]);
+      if (editingItem) {
+        // Pre-fill size from editing cart item
+        if (editingItem.selectedSize) {
+          const matchedSize = (product.sizes || []).find((s) => s.id === editingItem.selectedSize.id);
+          setSelectedSize(matchedSize || editingItem.selectedSize);
+        } else if (product.sizes && product.sizes.length > 0) {
+          setSelectedSize(product.sizes[0]);
+        } else {
+          setSelectedSize(null);
+        }
+
+        // Pre-fill addons from editing cart item
+        if (Array.isArray(editingItem.selectedAddons) && editingItem.selectedAddons.length > 0) {
+          const currentAddonIds = new Set(editingItem.selectedAddons.map((a) => a.id));
+          const preselected = (product.addons || []).filter((a) => currentAddonIds.has(a.id));
+          setSelectedAddons(preselected.length > 0 ? preselected : editingItem.selectedAddons);
+        } else {
+          setSelectedAddons([]);
+        }
+
+        // Pre-fill quantity
+        setQuantity(Math.max(1, Number(editingItem.quantity) || 1));
       } else {
-        setSelectedSize(null);
+        if (product.sizes && product.sizes.length > 0) {
+          setSelectedSize(product.sizes[0]);
+        } else {
+          setSelectedSize(null);
+        }
+        setSelectedAddons([]);
+        setQuantity(1);
       }
-      setSelectedAddons([]);
-      setQuantity(1);
     }
-  }, [product]);
+  }, [product, editingItem]);
 
   useEffect(() => {
     if (isOpen) {
@@ -59,12 +83,13 @@ export function ProductDetailModal({ product, isOpen, onClose, onAddToCart }) {
       selectedSize,
       selectedAddons,
       quantity,
+      editingCartKey: editingItem ? editingItem.cartKey : null,
     });
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity"
@@ -238,7 +263,7 @@ export function ProductDetailModal({ product, isOpen, onClose, onAddToCart }) {
               className="flex items-center gap-2 bg-[#0b6638] text-white font-black text-xs px-5 py-2.5 rounded-full hover:bg-[#08502c] active:scale-95 disabled:opacity-50 transition-all shadow-sm cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>{product.isAvailable === false ? "غير متوفر" : "أضف للسلة"}</span>
+              <span>{product.isAvailable === false ? "غير متوفر" : (editingItem ? "حفظ التعديل في السلة" : "أضف للسلة")}</span>
             </button>
 
             {/* Quantity Stepper Pill */}

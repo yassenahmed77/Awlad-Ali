@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Search, User, ArrowLeft, ArrowRight, Bike, MapPin, Phone, Clock, CheckCircle2, RotateCcw, Utensils, MessageSquare } from "lucide-react";
 import { storeConfig } from "@/config/theme.config";
 import { MAIN_CATEGORIES, PRODUCTS } from "@/data/menu.data";
@@ -23,12 +24,12 @@ import { ProductCardVertical } from "@/components/features/menu/ProductCardVerti
 import { ProductDetailModal } from "@/components/features/menu/ProductDetailModal";
 import { BottomNav } from "@/components/features/cart/BottomNav";
 import { CartDrawer } from "@/components/features/cart/CartDrawer";
-import { CheckoutModal } from "@/components/features/checkout/CheckoutModal";
 import { OrderSuccessModal } from "@/components/features/checkout/OrderSuccessModal";
 import { InstallAppModal } from "@/components/features/menu/InstallAppModal";
 import { usePwaInstall } from "@/hooks/usePwaInstall";
 
 export default function HomePage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("home");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSubCategory, setSelectedSubCategory] = useState("all");
@@ -37,8 +38,8 @@ export default function HomePage() {
 
   // Modals & Customer Order State
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [editingCartItem, setEditingCartItem] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [customerOrders, setCustomerOrders] = useState([]);
@@ -127,7 +128,32 @@ export default function HomePage() {
   }, []);
 
   const handleProductSelect = (product) => {
+    setEditingCartItem(null);
     setSelectedProduct(product);
+    setIsDetailOpen(true);
+  };
+
+  const handleEditCartItem = (cartItem) => {
+    if (!cartItem) return;
+    const targetProductId = cartItem.productId || cartItem.id;
+    const fullProduct = PRODUCTS.find((p) => p.id === targetProductId);
+
+    if (fullProduct) {
+      setSelectedProduct(fullProduct);
+    } else {
+      setSelectedProduct({
+        id: targetProductId,
+        name: cartItem.name,
+        categoryName: cartItem.categoryName || "",
+        image: cartItem.image || "/logo.svg",
+        basePrice: cartItem.selectedSize ? cartItem.selectedSize.price : cartItem.unitPrice,
+        sizes: cartItem.selectedSize ? [cartItem.selectedSize] : [],
+        addons: cartItem.selectedAddons || [],
+        description: "",
+      });
+    }
+
+    setEditingCartItem(cartItem);
     setIsDetailOpen(true);
   };
 
@@ -528,9 +554,11 @@ export default function HomePage() {
       <ProductDetailModal
         product={selectedProduct}
         isOpen={isDetailOpen}
+        editingItem={editingCartItem}
         onClose={() => {
           setIsDetailOpen(false);
           setSelectedProduct(null);
+          setEditingCartItem(null);
         }}
         onAddToCart={handleAddToCart}
       />
@@ -539,14 +567,11 @@ export default function HomePage() {
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        onProceedToCheckout={() => setIsCheckoutOpen(true)}
-      />
-
-      {/* Checkout Modal */}
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        onOrderPlaced={handleOrderPlaced}
+        onProceedToCheckout={() => {
+          setIsCartOpen(false);
+          router.push("/checkout");
+        }}
+        onEditItem={handleEditCartItem}
       />
 
       {/* Order Success Modal */}

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Package, Layers } from "lucide-react";
+import { ArrowLeft, Package, Layers, MapPin } from "lucide-react";
 import { useOrders } from "@/hooks/useOrders";
 import { PRODUCTS } from "@/data/menu.data";
 import { productsService } from "@/services/products.service";
@@ -10,6 +10,7 @@ import { productsService } from "@/services/products.service";
 import { DashboardHeader } from "@/components/features/dashboard/DashboardHeader";
 import { OrderCard } from "@/components/features/dashboard/OrderCard";
 import { ProductManager } from "@/components/features/dashboard/ProductManager";
+import { DeliveryZoneManager } from "@/components/features/dashboard/DeliveryZoneManager";
 
 export default function AdminDashboardPage() {
   const {
@@ -98,6 +99,18 @@ export default function AdminDashboardPage() {
               <Layers className="w-4 h-4" />
               <span>الأصناف والتوفر</span>
             </button>
+
+            <button
+              onClick={() => setActiveView("zones")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeView === "zones"
+                  ? "bg-brand-700 text-white shadow-sm"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              <MapPin className="w-4 h-4" />
+              <span>مناطق وأسعار التوصيل</span>
+            </button>
           </div>
         </div>
 
@@ -164,6 +177,9 @@ export default function AdminDashboardPage() {
             onToggleAvailability={handleToggleProductAvailability}
           />
         )}
+
+        {/* VIEW 3: DELIVERY ZONES & PRICING */}
+        {activeView === "zones" && <DeliveryZoneManager />}
       </main>
     </div>
   );

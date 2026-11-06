@@ -12,6 +12,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "@supabase/supabase-js": "^2.47.10",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",

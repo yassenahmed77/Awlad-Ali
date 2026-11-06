@@ -83,9 +83,9 @@ export function CartProvider({ children }) {
     return `${safeProductId}__${sizePart}__${addonsPart}`;
   }, []);
 
-  // Add item to cart with defensive price and quantity bounds
+  // Add item to cart with defensive price, quantity bounds, and edit mode support
   const addItem = useCallback(
-    ({ product, selectedSize, selectedAddons = [], quantity = 1 }) => {
+    ({ product, selectedSize, selectedAddons = [], quantity = 1, editingCartKey = null }) => {
       if (!product || typeof product !== "object") return;
 
       // Prevent adding unavailable products
@@ -105,17 +105,25 @@ export function CartProvider({ children }) {
       triggerBounce();
 
       setItems((prev) => {
+        // If editing an existing item from the cart, remove the old instance first
+        const baseItems = editingCartKey
+          ? prev.filter((item) => item.cartKey !== editingCartKey)
+          : prev;
+
         const cartKey = getCartItemKey(product.id, selectedSize, selectedAddons);
-        const existingIndex = prev.findIndex((item) => item.cartKey === cartKey);
+        const existingIndex = baseItems.findIndex((item) => item.cartKey === cartKey);
 
         if (existingIndex >= 0) {
-          const updated = [...prev];
-          const newQty = Math.min(99, updated[existingIndex].quantity + safeQuantity);
+          const updated = [...baseItems];
+          const finalQty = editingCartKey
+            ? safeQuantity
+            : Math.min(99, updated[existingIndex].quantity + safeQuantity);
+
           updated[existingIndex] = {
             ...updated[existingIndex],
-            quantity: newQty,
+            quantity: finalQty,
             unitPrice,
-            itemTotal: Math.round(newQty * unitPrice * 100) / 100,
+            itemTotal: Math.round(finalQty * unitPrice * 100) / 100,
           };
           return updated;
         }
@@ -133,7 +141,7 @@ export function CartProvider({ children }) {
           itemTotal: Math.round(safeQuantity * unitPrice * 100) / 100,
         };
 
-        return [...prev, newItem];
+        return [...baseItems, newItem];
       });
     },
     [getCartItemKey, triggerBounce]

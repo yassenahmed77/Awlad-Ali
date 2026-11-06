@@ -23,10 +23,14 @@ export const telegramService = {
       .join("\n");
 
     const orderTypeLabel = order.orderType === "delivery" ? "🛵 دليفري وتوصيل" : "🏬 استلام من الفرع (تيك أواي)";
+    const zoneLine = order.deliveryZone ? `\n🏘️ <b>المنطقة:</b> ${order.deliveryZone}` : "";
     const addressLine =
       order.orderType === "delivery" && order.customerAddress
         ? `\n📍 <b>العنوان:</b> ${order.customerAddress}`
         : "";
+    const locationLine = order.googleMapsUrl
+      ? `\n🗺️ <b>لوكيشن GPS للطيار:</b> <a href="${order.googleMapsUrl}">اضغط هنا لفتح الخريطة 📍</a>`
+      : "";
 
     const notesLine = order.notes ? `\n📝 <b>ملاحظات العميل:</b> ${order.notes}` : "";
 
@@ -35,7 +39,7 @@ export const telegramService = {
 ━━━━━━━━━━━━━━━━━
 👤 <b>العميل:</b> ${order.customerName}
 📞 <b>التليفون:</b> <code>${order.customerPhone}</code>
-📦 <b>النوع:</b> ${orderTypeLabel}${addressLine}${notesLine}
+📦 <b>النوع:</b> ${orderTypeLabel}${zoneLine}${addressLine}${locationLine}${notesLine}
 
 🛒 <b>تفاصيل الطلب:</b>
 ${itemsText}
